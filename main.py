@@ -87,8 +87,9 @@ async def hello(ctx, *args):
 
 @bot.command()
 async def pick_game(ctx):
-    game = games[randint(0, len(games)-1)]
+    game = games[randint(0, len(games) - 1)]
     await ctx.channel.send(f"Selected Game: {game}")
+
 
 @bot.command()
 async def msg(ctx, *args):
@@ -97,6 +98,7 @@ async def msg(ctx, *args):
         print(user.name)
         await eirik.send("messaging " + user.name + ": " + " ".join(args[1:]))
         await user.send(" ".join(args[1:]))
+
 
 @bot.command()
 async def joinus(ctx):
