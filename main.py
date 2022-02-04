@@ -1,5 +1,6 @@
 import discord
 from time import sleep
+
 # import nacl # Voice
 
 from discord.ext import commands
@@ -8,11 +9,12 @@ from collections import Counter
 
 bot = commands.Bot(command_prefix="$")
 people = {
-        "jack": 766415398530187305,
-        "karina": 533680717062733844,
-        "joey": 493254647780343808,
-        "eirik": 541302616068456448,
+    "jack": 766415398530187305,
+    "karina": 533680717062733844,
+    "joey": 493254647780343808,
+    "eirik": 541302616068456448,
 }
+
 
 @bot.event
 async def on_ready():
@@ -23,6 +25,7 @@ async def on_ready():
     poll_votes = Counter()
     poll_options = []
 
+
 @bot.event
 async def on_message(message):
     if message.author != bot.user:
@@ -30,9 +33,10 @@ async def on_message(message):
         await eirik.send(message.content)
     await bot.process_commands(message)
 
+
 @bot.command(
     help="Looks like you need some help.",
-    brief="Prints the list of values back to the channel."
+    brief="Prints the list of values back to the channel.",
 )
 async def say(ctx, *args):
     response = ""
@@ -42,24 +46,28 @@ async def say(ctx, *args):
 
     await ctx.channel.send(response)
 
+
 @bot.command()
 async def hello(ctx, *args):
     await ctx.channel.send("Hello noob!")
     user = await bot.fetch_user(ctx.author.id)
     await user.send("Hello! I'm CHUMPSBot!")
 
+
 @bot.command()
 async def msg(ctx, *args):
     if args[0] in people:
         user = await bot.fetch_user(people[args[0]])
         print(user.name)
-        await eirik.send("messaging " + user.name + ": " + " ".join(args))
-        await user.send(" ".join(args))
+        await eirik.send("messaging " + user.name + ": " + " ".join(args[1:]))
+        await user.send(" ".join(args[1:]))
+
 
 @bot.command()
 async def joinus(ctx):
     channel = ctx.author.voice.channel
     await channel.connect()
+
 
 @bot.command()
 async def poll(ctx, *args):
@@ -76,8 +84,11 @@ async def poll(ctx, *args):
     poll_options = [i.lower().strip() for i in poll_options]
     if poll_options[-1].startswith("and"):
         poll_options[-1] = poll_options[-1][3:].strip()
-    await ctx.channel.send(f"The poll_options are:\n"+ '\n'.join(poll_options))
-    await ctx.channel.send("Use $vote 'something' to vote. Use $stop_poll to stop the poll.")
+    await ctx.channel.send(f"The poll_options are:\n" + "\n".join(poll_options))
+    await ctx.channel.send(
+        "Use $vote 'something' to vote. Use $stop_poll to stop the poll."
+    )
+
 
 @bot.command()
 async def stop_poll(ctx):
@@ -90,12 +101,15 @@ async def stop_poll(ctx):
     poll_running = False
     poll_options = []
     poll_votes = Counter()
-    
+
+
 @bot.command()
 async def vote(ctx, *args):
     global poll_running, poll_votes, poll_options
     if not poll_running:
-        await ctx.channel.send("No poll is active. Use $poll 'option1,option2' to start one")
+        await ctx.channel.send(
+            "No poll is active. Use $poll 'option1,option2' to start one"
+        )
         return
     pick = " ".join(args).strip().lower()
     if pick in poll_options:
@@ -103,5 +117,6 @@ async def vote(ctx, *args):
         await ctx.channel.send(f"Your vote for {pick} has been registered!")
     else:
         await ctx.channel.send("That is not one of the poll options.")
+
 
 bot.run("OTMyODM4MTkzNjk3NTIxNjY1.YeYzRA.ei7LevdTg802Krokzr024Q4zzKo")
