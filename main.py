@@ -1,6 +1,7 @@
 import discord
 from time import sleep
 from random import randint
+import logging
 
 # import nacl # Voice
 
@@ -15,36 +16,10 @@ people = {
     "joey": 493254647780343808,
     "eirik": 541302616068456448,
 }
-games = [
-    "7 days to die",
-    "Counter-Strike",
-    "Brawlhalla",
-    "Dead by Daylight",
-    "Assassin's Creed Unity",
-    "Dying Light",
-    "Factorio",
-    "The Elder Scrolls Online",
-    "The Forest",
-    "Gang Beasts",
-    "Garry's Mod",
-    "Golf with Friends",
-    "Grand Theft Auto",
-    "GTFO",
-    "Hand Simulator",
-    "Left 4 Dead 2",
-    "Payday 2",
-    "Remnant of the Ashes",
-    "Risk of Rain 2",
-    "Stick Fight",
-    "Terraria",
-    "Sven Coop",
-    "Ghost Recon",
-    "Minecraft",
-    "Ultimate Chicken Horse",
-    "Uno",
-    "Valhiem",
-    "We Need to go Deeper",
-]
+games = []
+with open("games.txt", "r") as file:
+    for line in file:
+        games.append(line.strip())
 
 
 @bot.event
