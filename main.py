@@ -1,5 +1,6 @@
 import discord
 from time import sleep
+from random import randint
 # import nacl # Voice
 
 from discord.ext import commands
@@ -13,6 +14,36 @@ people = {
         "joey": 493254647780343808,
         "eirik": 541302616068456448,
 }
+games = [
+    "7 days to die",
+    "Counter-Strike",
+    "Brawlhalla",
+    "Dead by Daylight",
+    "Assassin's Creed Unity",
+    "Dying Light",
+    "Factorio",
+    "The Elder Scrolls Online",
+    "The Forest",
+    "Gang Beasts",
+    "Garry's Mod",
+    "Golf with Friends",
+    "Grand Theft Auto",
+    "GTFO",
+    "Hand Simulator",
+    "Left 4 Dead 2",
+    "Payday 2",
+    "Remnant of the Ashes",
+    "Risk of Rain 2",
+    "Stick Fight",
+    "Terraria",
+    "Sven Coop",
+    "Ghost Recon",
+    "Minecraft",
+    "Ultimate Chicken Horse",
+    "Uno",
+    "Valhiem",
+    "We Need to go Deeper",
+]
 
 @bot.event
 async def on_ready():
@@ -49,12 +80,17 @@ async def hello(ctx, *args):
     await user.send("Hello! I'm CHUMPSBot!")
 
 @bot.command()
+async def pick_game(ctx):
+    game = games[randint(0, len(games)-1)]
+    await ctx.channel.send(f"Selected Game: {game}")
+
+@bot.command()
 async def msg(ctx, *args):
     if args[0] in people:
         user = await bot.fetch_user(people[args[0]])
         print(user.name)
-        await eirik.send("messaging " + user.name + ": " + " ".join(args))
-        await user.send(" ".join(args))
+        await eirik.send("messaging " + user.name + ": " + " ".join(args[1:]))
+        await user.send(" ".join(args[1:]))
 
 @bot.command()
 async def joinus(ctx):
