@@ -156,4 +156,6 @@ async def vote(ctx, *args):
         await ctx.channel.send("That is not one of the poll options.")
 
 
-bot.run("OTMyODM4MTkzNjk3NTIxNjY1.YeYzRA.ei7LevdTg802Krokzr024Q4zzKo")
+with open("key.txt", "r") as file:
+    key = file.readline()
+bot.run(key)
