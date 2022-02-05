@@ -34,6 +34,7 @@ async def on_ready():
     poll_options = []
 
 
+@bot.event
 async def reset_pick():
     last_picked = datetime.datetime.now() - datetime.timedelta(minutes=60)
 
