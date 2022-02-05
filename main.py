@@ -1,6 +1,7 @@
 import discord
 from time import sleep
 from random import randint
+import datetime
 import logging
 
 # import nacl # Voice
@@ -24,12 +25,17 @@ with open("games.txt", "r") as file:
 
 @bot.event
 async def on_ready():
-    global eirik
+    global eirik, last_picked
+    last_picked = datetime.datetime.now() - datetime.timedelta(minutes=60)
     eirik = await bot.fetch_user(541302616068456448)
     global poll_running, poll_votes, poll_options
     poll_running = False
     poll_votes = Counter()
     poll_options = []
+
+
+async def reset_pick():
+    last_picked = datetime.datetime.now() - datetime.timedelta(minutes=60)
 
 
 @bot.event
@@ -62,8 +68,13 @@ async def hello(ctx, *args):
 
 @bot.command()
 async def pick_game(ctx):
-    game = games[randint(0, len(games) - 1)]
-    await ctx.channel.send(f"Selected Game: {game}")
+    global last_picked
+    if (datetime.datetime.now() - last_picked) > datetime.timedelta(minutes=30):
+        game = games[randint(0, len(games) - 1)]
+        await ctx.channel.send(f"Selected Game: {game}")
+        last_picked = datetime.datetime.now()
+    else:
+        await ctx.channel.send("guys you have to play the game... XD")
 
 
 @bot.command()
