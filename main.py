@@ -34,8 +34,6 @@ async def on_ready():
     poll_options = []
 
 
-
-
 @bot.event
 async def on_message(message):
     if message.author != bot.user:
