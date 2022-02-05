@@ -34,9 +34,6 @@ async def on_ready():
     poll_options = []
 
 
-@bot.command
-async def reset_pick():
-    last_picked = datetime.datetime.now() - datetime.timedelta(minutes=60)
 
 
 @bot.event
@@ -76,6 +73,12 @@ async def pick_game(ctx):
         last_picked = datetime.datetime.now()
     else:
         await ctx.channel.send("guys you have to play the game... XD")
+
+
+@bot.command()
+async def reset_pick(ctx):
+    global last_picked
+    last_picked = datetime.datetime.now() - datetime.timedelta(minutes=60)
 
 
 @bot.command()
